@@ -1,3 +1,7 @@
+# Miscellaneous project related work that is not to be pushed
+misc/
+miscellaneous/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
