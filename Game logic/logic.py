@@ -8,7 +8,7 @@ def clear():
 def stay(seconds=1):
     sleep(seconds)
 
-def display_header(innings_number, runs):
+def display_header(innings_number, runs, is_user_batting):
     clear()
     print('Innings {}'.format(innings_number).upper())
     print('{}ing\n'.format(innings_map[is_user_batting]).upper())
@@ -89,7 +89,7 @@ def innings(is_user_batting, innings_number):
     runs = 0
     is_out = False
     while not is_out:
-        display_header(innings_number, runs)
+        display_header(innings_number, runs, is_user_batting)
         user = user_plays()
         comp = comp_plays()
         if user == comp:
@@ -114,12 +114,16 @@ def declare_winner():
         diff *= -1
     print('{} by {} runs'.format(msg, diff))
 
-
 innings_map = {True: 'bat', False: 'bowl'}
 user_runs = 0
 comp_runs = 0
-is_user_batting = toss()
-_ = innings(is_user_batting, 1)
-is_user_batting = not is_user_batting
-_ = innings(is_user_batting, 2)
-declare_winner()
+
+def main():
+    is_user_batting = toss()
+    _ = innings(is_user_batting, 1)
+    is_user_batting = not is_user_batting
+    _ = innings(is_user_batting, 2)
+    declare_winner()
+
+if __name__ == '__main__':
+    main()
