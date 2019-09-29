@@ -109,7 +109,7 @@ def innings(is_user_batting, innings_number):
     while not is_out:
         display_header(innings_number, runs, is_user_batting, target)
         user = user_plays()
-        comp = comp_plays(3)
+        comp = comp_plays()
         if user == comp:
             is_out = out()
             end_innings(runs, is_user_batting)
