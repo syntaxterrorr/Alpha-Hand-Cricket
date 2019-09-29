@@ -95,7 +95,10 @@ def innings(is_user_batting, innings_number):
         if user == comp:
             is_out = out(runs, is_user_batting)
         else:
-            runs = increment_runs(runs, user)
+            if is_user_batting:
+                runs = increment_runs(runs, user)
+            else:
+                runs = increment_runs(runs, comp)
         stay()
     return runs
 
