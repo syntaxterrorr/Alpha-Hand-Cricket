@@ -10,6 +10,7 @@ CREATE TABLE Game (
     User_ID INT NOT NULL,
     Winner BOOLEAN NOT NULL,
     Run_Diff INT,
+    Game_Timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (User_ID) REFERENCES User(User_ID)
 );
 
@@ -20,7 +21,8 @@ CREATE TABLE Turn (
     Crix_Move TINYINT,
     User_Move TINYINT,
     is_toss BOOLEAN,
-    FOREIGN KEY (Game_ID) REFERENCES Game(Game_ID)
+    FOREIGN KEY (Game_ID) REFERENCES Game(Game_ID),
+    CHECK (Crix_Move >= 0 AND Crix_Move <=6 AND User_Move >= 0 AND User_Move <=6)
 );
 
 CREATE TABLE Toss (
