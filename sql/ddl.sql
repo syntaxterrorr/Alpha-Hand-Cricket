@@ -17,18 +17,19 @@ CREATE TABLE Game (
 CREATE TABLE Turn (
     Turn_ID INT PRIMARY KEY AUTO_INCREMENT,
     Game_ID INT NOT NULL,
-    Innings_No TINYINT NOT NULL,
-    Crix_Move TINYINT,
-    User_Move TINYINT,
-    is_toss BOOLEAN,
+    Innings_No TINYINT,
+    Crix_Move TINYINT NOT NULL,
+    User_Move TINYINT NOT NULL,
+    is_toss BOOLEAN NOT NULL,
     FOREIGN KEY (Game_ID) REFERENCES Game(Game_ID),
     CHECK (Crix_Move >= 0 AND Crix_Move <=6 AND User_Move >= 0 AND User_Move <=6)
 );
 
 CREATE TABLE Toss (
     Turn_ID INT PRIMARY KEY,
-    User_Choice BOOLEAN,
+    User_Choice_OE BOOLEAN NOT NULL,
     Winner BOOLEAN NOT NULL,
+    User_Choice_BB BOOLEAN,
     FOREIGN KEY (Turn_ID) REFERENCES Turn(Turn_ID)
 );
 
