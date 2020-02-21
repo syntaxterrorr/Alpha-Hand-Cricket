@@ -10,6 +10,7 @@ CREATE TABLE Game (
     User_ID INT NOT NULL,
     is_user_winner BOOLEAN NOT NULL,
     Run_Diff INT,
+    Target_Required INT NOT NULL,
     Game_Timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (User_ID) REFERENCES User(User_ID)
 );
