@@ -9,8 +9,9 @@ CREATE TABLE Game (
     Game_ID INT PRIMARY KEY AUTO_INCREMENT,
     User_ID INT NOT NULL,
     is_user_winner BOOLEAN NOT NULL,
+    Crix_Score INT NOT NULL,
+    User_Score INT NOT NULL,
     Run_Diff INT,
-    Target_Required INT NOT NULL,
     Game_Timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (User_ID) REFERENCES User(User_ID)
 );
