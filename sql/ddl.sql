@@ -22,7 +22,6 @@ CREATE TABLE Turn (
     Innings_No TINYINT,
     Crix_Move TINYINT NOT NULL,
     User_Move TINYINT NOT NULL,
-    is_toss BOOLEAN NOT NULL,
     FOREIGN KEY (Game_ID) REFERENCES Game(Game_ID),
     CHECK (Crix_Move >= 0 AND Crix_Move <=6 AND User_Move >= 0 AND User_Move <=6)
 );
