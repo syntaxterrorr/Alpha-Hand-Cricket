@@ -11,7 +11,7 @@ CREATE TABLE Game (
     is_user_winner BOOLEAN NOT NULL,
     Crix_Score INT NOT NULL,
     User_Score INT NOT NULL,
-    Run_Diff INT,
+    is_winner_not_out BOOLEAN NOT NULL,
     Game_Timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (User_ID) REFERENCES User(User_ID)
 );
