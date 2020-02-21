@@ -29,7 +29,7 @@ CREATE TABLE Toss (
     Turn_ID INT PRIMARY KEY,
     is_user_choice_even BOOLEAN NOT NULL,
     is_user_winner BOOLEAN NOT NULL,
-    is_user_choice_batting BOOLEAN,
+    is_winner_choice_batting BOOLEAN NOT NULL,
     FOREIGN KEY (Turn_ID) REFERENCES Turn(Turn_ID)
 );
 
