@@ -8,7 +8,7 @@ CREATE TABLE User (
 CREATE TABLE Game (
     Game_ID INT PRIMARY KEY AUTO_INCREMENT,
     User_ID INT NOT NULL,
-    Winner BOOLEAN NOT NULL,
+    is_user_winner BOOLEAN NOT NULL,
     Run_Diff INT,
     Game_Timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (User_ID) REFERENCES User(User_ID)
@@ -27,9 +27,9 @@ CREATE TABLE Turn (
 
 CREATE TABLE Toss (
     Turn_ID INT PRIMARY KEY,
-    User_Choice_OE BOOLEAN NOT NULL,
-    Winner BOOLEAN NOT NULL,
-    User_Choice_BB BOOLEAN,
+    is_user_choice_even BOOLEAN NOT NULL,
+    is_user_winner BOOLEAN NOT NULL,
+    is_user_choice_batting BOOLEAN,
     FOREIGN KEY (Turn_ID) REFERENCES Turn(Turn_ID)
 );
 
