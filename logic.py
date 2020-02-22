@@ -156,6 +156,3 @@ def main():
     is_user_batting = not is_user_batting
     _, has_won_by_runs = innings(is_user_batting, 2)
     declare_winner(has_won_by_runs)
-
-if __name__ == '__main__':
-    main()

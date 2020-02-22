@@ -21,5 +21,5 @@ $ mysql -u <username> -p <password> yourdatabase < sql/sample_dml.sql`
 ```
 ### Play Game
 ```
-$ python Views/logic.py
+$ python alpha_hand_cricket.py
 ```
