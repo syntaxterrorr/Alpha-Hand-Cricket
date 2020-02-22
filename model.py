@@ -1,8 +1,29 @@
+import pymysql
+from configparser import ConfigParser
+
+config = ConfigParser()
+config.read('config.ini')
+
+conn = pymysql.connect(host=config['Databse Connection']['database.host'],
+                            user=config['Databse Connection']['database.user'],
+                            password=config['Databse Connection']['database.password'],
+                            db=config['Databse Connection']['database.dbname'],
+                            cursorclass=pymysql.cursors.DictCursor)
+
+def write_to_db(query, params):
+    with conn.cursor() as cur:
+        cur.execute(query, params)
+
+
 class User:
     
     def __init__(self, user_name=None, user_id=None):
         self.id = user_id
         self.name = user_name
+    
+    def write(self):
+        query = "INSERT INTO User (User_Name) VALUES (%s)"
+        write_to_db(query, (self.name))
 
 
 class Game:
