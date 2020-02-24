@@ -14,6 +14,9 @@ def write_to_db(query, params):
     with conn.cursor() as cur:
         cur.execute(query, params)
 
+# TODO: Close connection at appropriate location
+# conn.close()
+
 
 class User:
     
