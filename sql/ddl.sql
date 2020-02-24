@@ -1,41 +1,41 @@
 USE alpha_hand_cricket;
 
 CREATE TABLE User (
-    User_ID INT PRIMARY KEY AUTO_INCREMENT,
-    User_Name VARCHAR(30) NOT NULL
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_name VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE Game (
-    Game_ID INT PRIMARY KEY AUTO_INCREMENT,
-    User_ID INT NOT NULL,
+    game_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
     is_user_winner BOOLEAN NOT NULL,
-    Crix_Score INT NOT NULL,
-    User_Score INT NOT NULL,
+    crix_score INT NOT NULL,
+    user_score INT NOT NULL,
     is_winner_not_out BOOLEAN NOT NULL,
-    Game_Timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (User_ID) REFERENCES User(User_ID)
+    game_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES User(user_id)
 );
 
 CREATE TABLE Turn (
-    Turn_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Game_ID INT NOT NULL,
-    Innings_No TINYINT,
-    Crix_Move TINYINT NOT NULL,
-    User_Move TINYINT NOT NULL,
-    FOREIGN KEY (Game_ID) REFERENCES Game(Game_ID),
-    CHECK (Crix_Move >= 0 AND Crix_Move <=6 AND User_Move >= 0 AND User_Move <=6)
+    turn_id INT PRIMARY KEY AUTO_INCREMENT,
+    game_id INT NOT NULL,
+    innings_no TINYINT,
+    crix_move TINYINT NOT NULL,
+    user_move TINYINT NOT NULL,
+    FOREIGN KEY (game_id) REFERENCES Game(game_id),
+    CHECK (crix_move >= 0 AND crix_move <=6 AND user_move >= 0 AND user_move <=6)
 );
 
 CREATE TABLE Toss (
-    Turn_ID INT PRIMARY KEY,
+    turn_id INT PRIMARY KEY,
     is_user_choice_even BOOLEAN NOT NULL,
     is_user_winner BOOLEAN NOT NULL,
     is_winner_choice_batting BOOLEAN NOT NULL,
-    FOREIGN KEY (Turn_ID) REFERENCES Turn(Turn_ID)
+    FOREIGN KEY (turn_id) REFERENCES Turn(turn_id)
 );
 
 CREATE TABLE Delivery (
-    Turn_ID INT PRIMARY KEY,
+    turn_id INT PRIMARY KEY,
     is_user_batting BOOLEAN NOT NULL,
-    FOREIGN KEY (Turn_ID) REFERENCES Turn(Turn_ID)
+    FOREIGN KEY (turn_id) REFERENCES Turn(turn_id)
 );

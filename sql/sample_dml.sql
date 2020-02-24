@@ -1,15 +1,15 @@
-INSERT INTO User (User_ID, User_Name)
+INSERT INTO User (user_id, user_name)
 VALUES
     (1, "John Doe"),
     (2, "Jane Doe");
 
-INSERT INTO Game (Game_ID, User_ID, is_user_winner, Crix_Score, User_Score, is_winner_not_out)
+INSERT INTO Game (game_id, user_id, is_user_winner, crix_score, user_score, is_winner_not_out)
 VALUES
     (1, 1, TRUE, 7, 25, FALSE),
     (2, 1, TRUE, 5, 9, TRUE),
     (3, 2, FALSE, 3, 0, FALSE);
 
-INSERT INTO Turn (Turn_ID, Game_ID, Innings_No, Crix_Move, User_Move)
+INSERT INTO Turn (turn_id, game_id, Innings_No, crix_move, user_move)
 VALUES
     (1, 1, NULL, 5, 1),
     (2, 1, 1, 3, 6),
@@ -32,13 +32,13 @@ VALUES
     (19, 3, 1, 4, 4),
     (20, 3, 1, 5, 5);
 
-INSERT INTO Toss (Turn_ID, is_user_choice_even, is_user_winner, is_winner_choice_batting)
+INSERT INTO Toss (turn_id, is_user_choice_even, is_user_winner, is_winner_choice_batting)
 VALUES
     (1, TRUE, TRUE, TRUE),
     (11, TRUE, FALSE, TRUE),
     (17, FALSE, TRUE, FALSE);
 
-INSERT INTO Delivery (Turn_ID, is_user_batting)
+INSERT INTO Delivery (turn_id, is_user_batting)
 VALUES
     (2, TRUE),
     (3, TRUE),
