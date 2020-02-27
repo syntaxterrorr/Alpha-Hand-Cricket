@@ -13,6 +13,10 @@ conn = pymysql.connect(host=config['Databse Connection']['database.host'],
 def write_to_db(query, params):
     with conn.cursor() as cur:
         cur.execute(query, params)
+        query = 'SELECT LAST_INSERT_ID() AS id'
+        cur.execute(query);
+        id = cur.fetchone()['id']
+        return id
 
 # TODO: Close connection at appropriate location
 # conn.close()
@@ -26,7 +30,7 @@ class User:
     
     def write(self):
         query = "INSERT INTO User (User_Name) VALUES (%s)"
-        write_to_db(query, (self.name))
+        self.id = write_to_db(query, (self.name))
 
 
 class Game:
@@ -38,6 +42,19 @@ class Game:
         self.crix_score = crix_score
         self.user_score = user_score
         self.is_winner_not_out = is_winner_not_out
+        self.turns = []
+
+    def add_turn(self, turn):
+        self.turns.append(turn)
+
+    def end(self):
+        pass
+
+    def write(self):
+        query = "INSERT INTO Game (user_id, is_user_winner, crix_score, user_score, is_winner_not_out) VALUES (%s, %s, %s, %s, %s)"
+        self.id = write_to_db(query, (self.user.id, self.is_user_winner, self.crix_score, self.user_score, self.is_winner_not_out))
+        for turn in turns:
+            turn.write()
 
 
 class Turn:
@@ -49,6 +66,10 @@ class Turn:
         self.crix_move = crix_move
         self.user_move = user_move
 
+    def write(self):
+        query = "INSERT INTO Turn (game_id, Innings_No, crix_move, user_move) VALUES (%s, %s, %s, %s)"
+        self.id = write_to_db(query, (self.game.id, self.innings_no, self.crix_move, self.user_move))
+
 
 class Toss (Turn):
     
@@ -58,9 +79,19 @@ class Toss (Turn):
         self.is_user_winner = is_user_winner
         self.is_winner_choice_batting = is_winner_choice_batting
 
+    def write(self):
+        super().write()
+        query = "INSERT INTO Toss (turn_id, is_user_choice_even, is_user_winner, is_winner_choice_batting) VALUES (%s, %s, %s, %s)"
+        write_to_db(query, (self.id, self.is_user_choice_even, self.is_user_winner, self.is_winner_choice_batting))
+
 
 class Delivery (Turn):
     
     def __init__(self, is_user_batting=None, game=None, innings_no=None, crix_move=0, user_move=0, turn_id=None):
         super().__init__(game, innings_no, crix_move, user_move, turn_id)
         self.is_user_batting = is_user_batting
+
+    def write(self):
+        super().write()
+        query = "INSERT INTO Delivery (turn_id, is_user_batting)"
+        write_to_db(query, (self.id, self.is_user_batting))
