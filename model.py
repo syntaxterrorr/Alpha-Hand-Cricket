@@ -18,8 +18,8 @@ def write_to_db(query, params):
         id = cur.fetchone()['id']
         return id
 
-# TODO: Close connection at appropriate location
-# conn.close()
+def close_mysql_connection():
+    conn.close()
 
 
 class User:
