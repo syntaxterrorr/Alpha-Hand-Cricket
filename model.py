@@ -13,10 +13,16 @@ conn = pymysql.connect(host=config['Database Connection']['database.host'],
 def write_to_db(query, params):
     with conn.cursor() as cur:
         cur.execute(query, params)
-        query = 'SELECT LAST_INSERT_ID() AS id'
+        query = "SELECT LAST_INSERT_ID() AS id"
         cur.execute(query);
         id = cur.fetchone()['id']
         return id
+
+def read_from_db(query):
+    with conn.cursor() as cur:
+        cur.execute(query)
+        result = cur.fetchall()
+        return result
 
 def close_mysql_connection():
     conn.close()
@@ -29,8 +35,16 @@ class User:
         self.name = user_name
 
     def write(self):
-        query = "INSERT INTO User (User_Name) VALUES (%s)"
+        query = "INSERT INTO User (user_name) VALUES (%s)"
         self.id = write_to_db(query, (self.name))
+
+    @classmethod
+    def read_all_users(cls):
+        query = "SELECT user_id, user_name FROM User"
+        result = read_from_db(query)
+        users = list(map(lambda user: cls(**user), result))
+        return users
+
 
 
 class Game:
