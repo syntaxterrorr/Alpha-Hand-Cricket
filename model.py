@@ -4,10 +4,10 @@ from configparser import ConfigParser
 config = ConfigParser()
 config.read('config.ini')
 
-conn = pymysql.connect(host=config['Databse Connection']['database.host'],
-                            user=config['Databse Connection']['database.user'],
-                            password=config['Databse Connection']['database.password'],
-                            db=config['Databse Connection']['database.dbname'],
+conn = pymysql.connect(host=config['Database Connection']['database.host'],
+                            user=config['Database Connection']['database.user'],
+                            password=config['Database Connection']['database.password'],
+                            db=config['Database Connection']['database.dbname'],
                             cursorclass=pymysql.cursors.DictCursor)
 
 def write_to_db(query, params):
@@ -23,18 +23,18 @@ def close_mysql_connection():
 
 
 class User:
-    
+
     def __init__(self, user_name=None, user_id=None):
         self.id = user_id
         self.name = user_name
-    
+
     def write(self):
         query = "INSERT INTO User (User_Name) VALUES (%s)"
         self.id = write_to_db(query, (self.name))
 
 
 class Game:
-    
+
     def __init__(self, user=None, is_user_winner=False, crix_score=0, user_score=0, is_winner_not_out=False, game_id=None):
         self.id = game_id
         self.user = user
@@ -69,19 +69,19 @@ class Game:
 
 
 class Turn:
-    
+
     def __init__(self, game=None, innings_no=None, crix_move=0, user_move=0, turn_id=None):
         self.id = turn_id
         self.game = game
         self.innings_no = innings_no
         self.crix_move = crix_move
         self.user_move = user_move
-    
+
     def is_toss(self):
         if self.innings_no:
             return False
         return True
-    
+
     def write(self):
         query = "INSERT INTO Turn (game_id, Innings_No, crix_move, user_move) VALUES (%s, %s, %s, %s)"
         self.id = write_to_db(query, (self.game.id, self.innings_no, self.crix_move, self.user_move))
