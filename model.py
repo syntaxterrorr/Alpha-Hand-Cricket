@@ -48,7 +48,18 @@ class Game:
         self.turns.append(turn)
 
     def end(self):
-        pass
+        for turn in turns:
+            if turn.is_toss():
+                continue
+            if not turn.is_out():
+                if turn.is_user_batting:
+                    self.user_score += turn.user_move
+                else:
+                    self.crix_score += turn.crix_move
+        if self.user_score > self.crix_score:
+            self.is_user_winner = True
+        if not turns[-1].is_out:
+            self.is_winner_not_out = True
 
     def write(self):
         query = "INSERT INTO Game (user_id, is_user_winner, crix_score, user_score, is_winner_not_out) VALUES (%s, %s, %s, %s, %s)"
@@ -65,19 +76,29 @@ class Turn:
         self.innings_no = innings_no
         self.crix_move = crix_move
         self.user_move = user_move
-
+    
+    def is_toss(self):
+        if self.innings_no:
+            return False
+        return True
+    
     def write(self):
         query = "INSERT INTO Turn (game_id, Innings_No, crix_move, user_move) VALUES (%s, %s, %s, %s)"
         self.id = write_to_db(query, (self.game.id, self.innings_no, self.crix_move, self.user_move))
 
 
 class Toss (Turn):
-    
-    def __init__(self, is_user_choice_even=None, is_user_winner=None, is_winner_choice_batting=None, game=None, innings_no=None, crix_move=0, user_move=0, turn_id=None):
+
+    def __init__(self, is_user_choice_even=None, is_winner_choice_batting=None, game=None, innings_no=None, crix_move=0, user_move=0, turn_id=None):
         super().__init__(game, innings_no, crix_move, user_move, turn_id)
         self.is_user_choice_even = is_user_choice_even
-        self.is_user_winner = is_user_winner
         self.is_winner_choice_batting = is_winner_choice_batting
+
+        sum = self.crix_move + self.user_move
+        if self.is_user_choice_even ^ (sum % 2 == 0) :
+            self.is_user_winner = True
+        else:
+            self.is_user_winner = False
 
     def write(self):
         super().write()
@@ -86,10 +107,15 @@ class Toss (Turn):
 
 
 class Delivery (Turn):
-    
+
     def __init__(self, is_user_batting=None, game=None, innings_no=None, crix_move=0, user_move=0, turn_id=None):
         super().__init__(game, innings_no, crix_move, user_move, turn_id)
         self.is_user_batting = is_user_batting
+
+    def is_out(self):
+        if self.crix_move == self.user_move:
+            return True
+        return False
 
     def write(self):
         super().write()
