@@ -24,7 +24,7 @@ $ mysql -u <username> -p alpha_hand_cricket < sql/sample_dml.sql`
 $ python alpha_hand_cricket.py
 ```
 ### MediaPipe
-1. Installation link: https://mediapipe.readthedocs.io/en/latest/install.html
+1. Installation link: https://mediapipe.readthedocs.io/en/latest/install.html (If installing on Debian and Ubuntu, preferably run setup_opencv.sh to automatically build OpenCV from source and modify MediaPipe’s OpenCV config.
 2. Run hand tracking model on CPU
 ```
 $ bazel build -c opt --define MEDIAPIPE_DISABLE_GPU=1 mediapipe/examples/desktop/hand_tracking:hand_tracking_cpu
