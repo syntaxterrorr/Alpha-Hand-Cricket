@@ -21,7 +21,7 @@ $ mysql -u <username> -p alpha_hand_cricket < sql/sample_dml.sql`
 ```
 ### Play Game
 ```
-$ python alpha_hand_cricket.py
+$ python3 alpha_hand_cricket.py
 ```
 ### MediaPipe
 1. Installation link: https://mediapipe.readthedocs.io/en/latest/install.html 
