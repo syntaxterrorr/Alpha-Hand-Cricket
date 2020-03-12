@@ -28,7 +28,7 @@ $ python3 alpha_hand_cricket.py
 (If installing on Debian and Ubuntu, preferably run setup_opencv.sh to automatically build OpenCV from source and modify MediaPipe’s OpenCV config.)
 2. Run hand tracking model on CPU
 ```
-$ bazel build -c opt --define MEDIAPIPE_DISABLE_GPU=1 mediapipe/examples/desktop/hand_tracking:hand_tracking_cpu
+$ bazel-1.2.1 build -c opt --define MEDIAPIPE_DISABLE_GPU=1 mediapipe/examples/desktop/hand_tracking:hand_tracking_cpu
 $ GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/hand_tracking/hand_tracking_cpu --calculator_graph_config_file=mediapipe/graphs/hand_tracking/hand_tracking_desktop_live.pbtxt
 ```
 3. Run hand tracking model on GPU (Only Linux)
