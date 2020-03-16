@@ -18,6 +18,7 @@ from keras.regularizers import l2
 # In[2]:
 
 
+#Currently took data from a list and made a csv file
 l=[2,4,1,6,1,2,1,1,6,5,4,2,1,5,2,2,3,2,4,6,5,1,1,3,4,1,2,5,6,2,1,4,2,3,1,4,2,5,4,2,1,6,4,2,5,4,4,1,2,5,6]
 # hold=[4, 4]
 # pred=[1, 2, 5, 6]
@@ -26,6 +27,7 @@ l=[2,4,1,6,1,2,1,1,6,5,4,2,1,5,2,2,3,2,4,6,5,1,1,3,4,1,2,5,6,2,1,4,2,3,1,4,2,5,4
 # In[3]:
 
 
+#To make batches of 4 for training purposes
 pred=l[-4:]
 l=l[:-4]
 m=len(l)%5
@@ -37,6 +39,7 @@ if m!=0:
 # In[4]:
 
 
+#Temp
 col_names =  ['Sequences']
 df_train = pd.DataFrame(columns = col_names)
 for i in range(0,len(l),5):
@@ -167,6 +170,8 @@ df_train.to_csv('train_new.csv')
 # In[22]:
 
 
+#To incorporate new user_gestures for new predictions
+
 # i=0
 # while True:
 #     print("1 to exit")
@@ -234,5 +239,6 @@ model.fit(X_train_rshp, y_train, batch_size=32, nb_epoch=5)
 
 y_pred = model.predict(X_test_rshp)
 print(y_test)
+print()
 print(np.round(y_pred))
 
