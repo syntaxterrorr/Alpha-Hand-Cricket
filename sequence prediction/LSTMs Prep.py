@@ -18,12 +18,14 @@ from keras.regularizers import l2
 # In[2]:
 
 
+#This comes from stored data
 l=[2,3,1,3,4,5,1,2,4,6,4,4,1,2,5,6]
 
 
 # In[3]:
 
 
+#To make groups of 4 and split leftover into hold to hold the elements and pred to make predictions
 pred=l[-4:]
 l=l[:-4]
 m=len(l)%5
@@ -47,6 +49,7 @@ df_train=pd.read_csv("train_new.csv")
 # In[6]:
 
 
+# Enter new values into dataframe from l
 c=0
 for i in range(0,len(l),5):
     c+=1
@@ -56,6 +59,7 @@ for i in range(0,len(l),5):
 # In[7]:
 
 
+# Manipulation to make np arrays of list objects for training
 df_train.loc[:,'Sequences'] = df_train.loc[:,'Sequences'].apply(literal_eval)
 df_train
 
@@ -63,6 +67,7 @@ df_train
 # In[8]:
 
 
+# Reform the list l from the leftover elements and pred(prediction elements) 
 l=hold+pred
 l
 
@@ -70,6 +75,7 @@ l
 # In[9]:
 
 
+#Write back to csv file
 df_train.to_csv('train_new.csv',index=False)
 
 
@@ -114,6 +120,7 @@ input_shape = df_train_X_rshp[0].shape
 # In[15]:
 
 
+#Adding layers
 model = Sequential()
 model.add(LSTM(128, input_shape=input_shape, return_sequences=True, go_backwards=False,
                W_regularizer=l2(0.005), U_regularizer=l2(0.005),
@@ -125,6 +132,7 @@ model.add(Dense(1,activation='linear'))
 # In[16]:
 
 
+#Model training
 model.compile(loss='mse', optimizer='rmsprop')
 model.fit(df_train_X_rshp, df_train_y, batch_size=32, nb_epoch=5)
 
@@ -132,6 +140,7 @@ model.fit(df_train_X_rshp, df_train_y, batch_size=32, nb_epoch=5)
 # In[17]:
 
 
+#prediction
 df_pred_y = model.predict(df_test_X_rshp)
 print(int(np.round(df_pred_y)[0][0]))
 
@@ -139,6 +148,7 @@ print(int(np.round(df_pred_y)[0][0]))
 # In[18]:
 
 
+#preparing new inputs function
 def prepareTest(pred):
     df1=pd.DataFrame(columns=['pred'])
     df1.loc[0]=[str(pred)]
@@ -151,8 +161,7 @@ def prepareTest(pred):
 # In[19]:
 
 
-# To incorporate new user_gestures for new predictions
-
+# To incorporate new user_gestures for new predictions by shifting elemnts in pred list and make prediction. Also append new elemnts to l list
 i=0
 while True:
     print("-1 to exit")
@@ -173,5 +182,5 @@ while True:
 
 
 l
-# 2,4,6 added to the list which will be appended to the csv file through the process executed at the top of the file
+# 2,4,6 added to the list which will be appended to the csv file through the process executed at the top of the file. Save this list l to database
 
