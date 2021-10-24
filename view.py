@@ -1,12 +1,11 @@
 # from model import User
-import logic
+import logic,hand_cricket_main,hand_cricket_confirm
 
 def start_game():
-    logic.main()
+    hand_cricket_main.main()
 
 def start_view():
-    print('Alpha Hand Cricket !!')
-    print('Enter y to begin the game')
+    hand_cricket_confirm.confirm()
 
 def end_view():
     print('Goodbye!')
