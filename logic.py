@@ -1,6 +1,7 @@
 from os import system, name
 from random import randint
 from time import sleep
+import hand_cricket_confirm
 
 def clear():
     _ = system('clear' if name =='posix' else 'cls')
@@ -20,8 +21,8 @@ def display_header(innings_number, runs, is_user_batting, target):
 
 def user_plays():
     while True:
-        print('Choose a number: ', end='')
-        num = int(input().strip())
+        # print('Choose a number: ', end='')
+        num = hand_cricket_confirm.user_move() #int(input().strip())
         if num in range(7):
             return num
         else:
